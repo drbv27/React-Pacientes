@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const Formulario = () => {
+const Formulario = ({ pacientes, setPacientes }) => {
   const [nombre, setNombre] = useState("");
   const [propietario, setPropietario] = useState("");
   const [email, setEmail] = useState("");
@@ -16,6 +16,22 @@ const Formulario = () => {
       setError(true); //tambien puede ser return despues de esto, eliminar el else y luegosetError(false)
     } else {
       setError(false);
+      //construir objeto paciente
+      const objetoPaciente = {
+        nombre,
+        propietario,
+        email,
+        fecha,
+        sintomas,
+      };
+      setPacientes([...pacientes, objetoPaciente]);
+
+      //reiniciar el formulario
+      setNombre("");
+      setPropietario("");
+      setEmail("");
+      setFecha("");
+      setSintomas("");
     }
   };
 
