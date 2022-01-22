@@ -41,9 +41,23 @@ const Formulario = ({ pacientes, setPacientes, paciente }) => {
         email,
         fecha,
         sintomas,
-        id: generarId(),
       };
-      setPacientes([...pacientes, objetoPaciente]);
+
+      if (paciente.id) {
+        //Editando el registro
+        objetoPaciente.id = paciente.id;
+        console.log(objetoPaciente);
+        console.log(paciente);
+
+        const pacientesActualizados = pacientes.map((pacienteState) =>
+          pacienteState.id === paciente.id ? objetoPaciente : pacienteState
+        );
+        setPacientes(pacientesActualizados);
+      } else {
+        //nuevo registro
+        objetoPaciente.id = generarId();
+        setPacientes([...pacientes, objetoPaciente]);
+      }
 
       //reiniciar el formulario
       setNombre("");
@@ -159,7 +173,7 @@ const Formulario = ({ pacientes, setPacientes, paciente }) => {
         <input
           type="submit"
           className="bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-pointer transition-all rounded-sm"
-          value="Agregar Paciente"
+          value={paciente.id ? "Editar Paciente" : "Agregar Paciente"}
         />
       </form>
     </div>
